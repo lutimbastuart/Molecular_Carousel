@@ -76,6 +76,7 @@
                 Jmol.script(jsmolApplet, 'select protein; ribbons only; color ribbons structure;');
             } else if (style === "cpk") {
                 Jmol.script(jsmolApplet, 'select all; spacefill 100%; color cpk;');
+            }
         }
     </script>
 </head>
@@ -115,17 +116,17 @@
                     <div class="card-body">
                         <h5 class="card-title">Interaction Tips</h5>
                         <p>
-                            - Click and drag to rotate the molecule
-                            - Scroll to zoom in/out
+                            - Click and drag to rotate the molecule<br/>
+                            - Scroll to zoom in/out<br/>
                             - Right-click for additional options
                         </p>
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-8 viewer-section">
                 <div class="text-center">
-                    <h1>MoLuDock Molecular Viewer <br>LSBU</br></h1>
+                    <h1>MoLuDock Molecular Viewer<br/>LSBU</h1> <!-- Corrected closing tag -->
                     <div class="mb-3">
                         <input type="file" id="pdbFile" accept=".pdb" class="form-control">
                     </div>
