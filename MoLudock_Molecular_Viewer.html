@@ -64,7 +64,18 @@
                 Jmol.script(jsmolApplet, 'select protein; cartoon only; color cartoon structure;');
             } else if (style === "ballAndStick") {
                 Jmol.script(jsmolApplet, 'select all; spacefill off; wireframe 0.15; spacefill 23%; color cpk;');
-            }
+            } else if (style === "wireframe") {
+                Jmol.script(jsmolApplet, 'select all; wireframe only; color cpk;');
+            } else if (style === "spacefill") {
+                Jmol.script(jsmolApplet, 'select all; spacefill on; color cpk;');
+            } else if (style === "stick") {
+                Jmol.script(jsmolApplet, 'select all; wireframe 0.15; spacefill off; color cpk;');
+            } else if (style === "surface") {
+                Jmol.script(jsmolApplet, 'isosurface molecular; color isosurface translucent;');
+            } else if (style === "ribbons") {
+                Jmol.script(jsmolApplet, 'select protein; ribbons only; color ribbons structure;');
+            } else if (style === "cpk") {
+                Jmol.script(jsmolApplet, 'select all; spacefill 100%; color cpk;');
         }
     </script>
 </head>
