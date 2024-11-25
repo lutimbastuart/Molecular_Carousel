@@ -53,17 +53,35 @@
                 }
             });
 
-            $("#switchStyle").click(function() {
-                currentStyle = (currentStyle === "cartoon") ? "ballAndStick" : "cartoon";
+            $(".style-btn").click(function() {
+                currentStyle = $(this).data("style");
                 applyStyle(currentStyle);
             });
         });
 
         function applyStyle(style) {
-            if (style === "cartoon") {
-                Jmol.script(jsmolApplet, 'select protein; cartoon only; color cartoon structure;');
-            } else if (style === "ballAndStick") {
-                Jmol.script(jsmolApplet, 'select all; spacefill off; wireframe 0.15; spacefill 23%; color cpk;');
+            switch(style) {
+                case "cartoon":
+                    Jmol.script(jsmolApplet, 'select protein; cartoon only; color cartoon structure;');
+                    break;
+                case "ballAndStick":
+                    Jmol.script(jsmolApplet, 'select all; spacefill off; wireframe 0.15; spacefill 23%; color cpk;');
+                    break;
+                case "wireframe":
+                    Jmol.script(jsmolApplet, 'select all; wireframe only; color cpk;');
+                    break;
+                case "spacefill":
+                    Jmol.script(jsmolApplet, 'select all; spacefill on; color cpk;');
+                    break;
+                case "stick":
+                    Jmol.script(jsmolApplet, 'select all; wireframe 0.15; spacefill off; color cpk;');
+                    break;
+                case "surface":
+                    Jmol.script(jsmolApplet, 'isosurface molecular; color isosurface translucent;');
+                    break;
+                case "ribbons":
+                    Jmol.script(jsmolApplet, 'select protein; ribbons only; color ribbons structure;');
+                    break;
             }
         }
     </script>
@@ -79,7 +97,7 @@
                         <ol>
                             <li>Upload a PDB file of a molecular structure</li>
                             <li>Click "Load PDB File" to render the molecule</li>
-                            <li>Use "Switch Style" to change visualization</li>
+                            <li>Use style buttons to change visualization</li>
                         </ol>
                     </div>
                 </div>
@@ -90,6 +108,11 @@
                         <ul>
                             <li><strong>Cartoon:</strong> Simplified protein structure representation</li>
                             <li><strong>Ball and Stick:</strong> Detailed atomic representation</li>
+                            <li><strong>Wireframe:</strong> Line-based representation of bonds</li>
+                            <li><strong>Spacefill:</strong> Atoms shown as spheres sized to van der Waals radii</li>
+                            <li><strong>Stick:</strong> Bonds-only representation</li>
+                            <li><strong>Surface:</strong> 3D surface rendering of molecular boundaries</li>
+                            <li><strong>Ribbons:</strong> Ribbon-like depiction of secondary structures</li>
                         </ul>
                     </div>
                 </div>
@@ -98,8 +121,8 @@
                     <div class="card-body">
                         <h5 class="card-title">Interaction Tips</h5>
                         <p>
-                            - Click and drag to rotate the molecule
-                            - Scroll to zoom in/out
+                            - Click and drag to rotate the molecule<br>
+                            - Scroll to zoom in/out<br>
                             - Right-click for additional options
                         </p>
                     </div>
@@ -108,13 +131,19 @@
             
             <div class="col-md-8 viewer-section">
                 <div class="text-center">
-                    <h1>MoLuDock Molecular Viewer</h1>
+                    <h1>MoLuDock Molecular Viewer<br>LSBU</h1>
                     <div class="mb-3">
                         <input type="file" id="pdbFile" accept=".pdb" class="form-control">
                     </div>
                     <div class="mb-3">
                         <button id="loadPDB" class="btn btn-primary me-2">Load PDB File</button>
-                        <button id="switchStyle" class="btn btn-secondary">Switch Style</button>
+                        <button class="btn btn-secondary style-btn" data-style="cartoon">Cartoon</button>
+                        <button class="btn btn-secondary style-btn" data-style="ballAndStick">Ball and Stick</button>
+                        <button class="btn btn-secondary style-btn" data-style="wireframe">Wireframe</button>
+                        <button class="btn btn-secondary style-btn" data-style="spacefill">Spacefill</button>
+                        <button class="btn btn-secondary style-btn" data-style="stick">Stick</button>
+                        <button class="btn btn-secondary style-btn" data-style="surface">Surface</button>
+                        <button class="btn btn-secondary style-btn" data-style="ribbons">Ribbons</button>
                     </div>
                     <div id="viewer" class="d-flex justify-content-center"></div>
                 </div>
