@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoLuDock Molecular Viewer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://chemapps.stolaf.edu/jmol/jsmol/JSmol.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+        body {
+            background-color: #f4f4f4;
+        }
+        .tutorial-section {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .viewer-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 600px;
+        }
+    </style>
+    <script type="text/javascript">
+        var Info = {
+            width: 600,
+            height: 500,
+            use: "HTML5",
+            j2sPath: "https://chemapps.stolaf.edu/jmol/jsmol/j2s",
+            script: "set antialiasDisplay; set showFrank false"
+        };
+
+        var currentStyle = "cartoon";
+
+        $(document).ready(function() {
+            $("#viewer").html(Jmol.getAppletHtml("jsmolApplet", Info));
+
+            $("#loadPDB").click(function() {
+                var pdbFile = document.getElementById('pdbFile').files[0];
+                if (pdbFile) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        var pdbData = e.target.result;
+                        Jmol.script(jsmolApplet, 'load DATA "model"\n' + pdbData + '\nEND "model";');
+                        applyStyle(currentStyle);
+                    };
+                    reader.readAsText(pdbFile);
+                } else {
+                    alert("Please select a PDB file.");
+                }
+            });
+
+            $("#switchStyle").click(function() {
+                currentStyle = (currentStyle === "cartoon") ? "ballAndStick" : "cartoon";
+                applyStyle(currentStyle);
+            });
+        });
+
+        function applyStyle(style) {
+            if (style === "cartoon") {
+                Jmol.script(jsmolApplet, 'select protein; cartoon only; color cartoon structure;');
+            } else if (style === "ballAndStick") {
+                Jmol.script(jsmolApplet, 'select all; spacefill off; wireframe 0.15; spacefill 23%; color cpk;');
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 tutorial-section">
+                <h2>Molecular Visualization Tutorial</h2>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">How to Use</h5>
+                        <ol>
+                            <li>Upload a PDB file of a molecular structure</li>
+                            <li>Click "Load PDB File" to render the molecule</li>
+                            <li>Use "Switch Style" to change visualization</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Visualization Modes</h5>
+                        <ul>
+                            <li><strong>Cartoon:</strong> Simplified protein structure representation</li>
+                            <li><strong>Ball and Stick:</strong> Detailed atomic representation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Interaction Tips</h5>
+                        <p>
+                            - Click and drag to rotate the molecule
+                            - Scroll to zoom in/out
+                            - Right-click for additional options
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-8 viewer-section">
+                <div class="text-center">
+                    <h1>MoLuDock Molecular Viewer</h1>
+                    <div class="mb-3">
+                        <input type="file" id="pdbFile" accept=".pdb" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <button id="loadPDB" class="btn btn-primary me-2">Load PDB File</button>
+                        <button id="switchStyle" class="btn btn-secondary">Switch Style</button>
+                    </div>
+                    <div id="viewer" class="d-flex justify-content-center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
