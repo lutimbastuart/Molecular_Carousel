@@ -97,11 +97,11 @@
             var baseName = fileName.replace(/\.[^/.]+$/, "");
             
             // Get SMILES format
-            Jmol.script(jsmolApplet, 'write SMILES');
+            Jmol.script(jsmolApplet, 'calculate SMILES');
             
             // Use a callback to get the SMILES data
             setTimeout(function() {
-                var smiles = Jmol.evaluateVar(jsmolApplet, '$_smiles');
+                var smiles = Jmol.evaluateVar(jsmolApplet, 'SMILES');
                 
                 // Display molecule information
                 $("#moleculeInfo").html("<strong>Molecule Name:</strong> " + baseName + "<br><strong>SMILES Format:</strong> " + smiles);
@@ -160,6 +160,7 @@
                     </div>
                     <div class="mb-3">
                         <button id="loadPDB" class="btn btn-primary me-2">Load PDB File</button>
+
                         <!-- Style buttons -->
                         <!-- Add buttons here if needed -->
                         <button class="btn btn-secondary style-btn" data-style="cartoon">Cartoon</button>
