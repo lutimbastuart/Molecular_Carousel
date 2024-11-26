@@ -84,6 +84,15 @@
                     break;
             }
         }
+        function displayMoleculeInfo(fileName) {
+            // Extract the base name without extension
+            var baseName = fileName.replace(/\.[^/.]+$/, "");
+            
+            // Get SMILES format
+            var smiles = Jmol.evaluateVar(jsmolApplet, '{*}.find("SMILES")');
+
+            // Display molecule information
+            $("#moleculeInfo").html("<strong>Molecule Name:</strong> " + baseName + "<br><strong>SMILES Format:</strong> " + smiles);
     </script>
 </head>
 <body>
