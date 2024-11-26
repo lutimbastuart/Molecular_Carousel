@@ -25,5 +25,5 @@ Ensure you have:
 ### Running Locally
 1. Clone the repository:
    ```bash
-   git clone https://https://github.com/lutimbastuart/Molecular_Carousel/moludock-molecular-viewer.git
+   git clone https://github.com/lutimbastuart/Molecular_Carousel.git
    cd moludock-molecular-viewer
