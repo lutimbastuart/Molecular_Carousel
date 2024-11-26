@@ -34,8 +34,10 @@
         };
 
         var currentStyle = "cartoon";
+        var jsmolApplet;
 
         $(document).ready(function() {
+            jsmolApplet = Jmol.getApplet("jsmolApplet", Info);
             $("#viewer").html(Jmol.getAppletHtml("jsmolApplet", Info));
 
             $("#loadPDB").click(function() {
@@ -46,6 +48,7 @@
                         var pdbData = e.target.result;
                         Jmol.script(jsmolApplet, 'load DATA "model"\n' + pdbData + '\nEND "model";');
                         applyStyle(currentStyle);
+                        displayMoleculeInfo(pdbFile.name);
                     };
                     reader.readAsText(pdbFile);
                 } else {
